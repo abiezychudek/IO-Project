@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe</title>
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/rank">Recipe ranking</a></li>
+    <li class="search-bar">
+      <form action="#" th:action="@{/}" method="post" th:object="${ingr}">
+        <input type="text" th:field="*{name}" placeholder="Search..." name="search">
+        <input type="submit" value="Search">
+      </form>
+    </li>
+  </ul>
+</nav>
+<div class="recipe-post" th:each="recipe : ${recipes}">
+  <div class="recipe-header">
+    <h2 class="title" th:text="${recipe.title}"></h2>
+    <p th:text="${recipe.author}"></p>
+    <div class="rating">Ocena: <strong th:text="${recipe.avgRating}">/5</strong></div>
+  </div>
+  <div class="recipe-image">
+    <img th:src="@{ ${recipe.imgUrl}}" alt="img">
+  </div>
+  <div class="recipe-content">
+    <div class="recipe-details">
+      <ul>
+        <li>
+          <strong>Czas przygotowania: </strong>
+          <span th:text="${recipe.duration}">h</span>
+        </li>
+        <li>
+          <strong>Poziom trudności: </strong>
+          <span th:text="${recipe.difficulty}">/5</span>
+        </li>
+        <li>
+          <strong>Ilość porcji :</strong>
+          <span th:text="${recipe.howManyPortions}"></span>
+        </li>
+      </ul>
+      <h3>Skladniki:</h3>
+      <ul>
+        <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}"></li>
+      </ul>
+      <h3>Przygotowanie:</h3>
+      <ol>
+        <li th:each="step : ${recipe.instructions}" th:text="${step}"></li>
+      </ol>
+    </div>
+  </div>
+</div>
+</body>
+</html>
