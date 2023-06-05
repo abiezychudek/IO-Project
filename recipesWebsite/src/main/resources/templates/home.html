@@ -1,44 +1,35 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Przepisy</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-
 <body>
-<nav>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/rank">Recipe ranking</a></li>
-        <li><a href="/createPost">Create post</a></li>
-        <li class="search-bar">
-            <form action="#" th:action="@{/}" method="post" th:object="${ingr}">
-                <input type="text" th:field="*{name}" placeholder="Search..." name="search">
-                <input type="submit" value="Search">
-            </form>
-        </li>
-    </ul>
-</nav>
-<form action="#" th:action="@{/}" method="post" th:object="${ingr}">
-    <select th:field="*{ingrdts}" id="ingrdts" multiple>
-        <option th:each="i : ${T(com.example.recipeswebsite.model.CategoryInterface.Categories).values()}" th:value="${i}" th:text="${i}"></option>
-    </select>
-    <input type="submit" value="Filter">
-</form>
-<div class="home-page-container">
-    <div class="recipe-item" th:each="recipe : ${recipes}">
-        <a th:href="@{'/posts/' + ${recipe.getId()}}">
-            <img th:src="@{${recipe.imgUrl}}" alt="img">
-            <div class="recipe-item-footer">
-                <p th:text="${recipe.getTitle()}"></p>
-                <i th:text="${recipe.getAuthor()}"></i>
-                <i th:each="k : ${recipe.getIngredients()}" th:text="${k.name}"></i>
+<div class="container">
+    <div th:replace="@{/viewTemplate}::header"> </div>
+    <hr>
+    <div class="row">
+        <div class="left-column"><div th:replace="@{/viewTemplate}::left-search"> </div> </div>
+        
+        <div class="right-column">
+            <div class="posts-container">
+                <h2>New Recipes</h2>
+                <div class="recipe-item" th:each="recipe : ${recipes}">
+                    <a th:href="@{'/posts/' + ${recipe.getId()}}">
+                        <img th:src="@{${recipe.imgUrl}}" alt="img">
+                        <div class="recipe-item-footer">
+                            <p th:text="${recipe.getTitle()}"></p>
+                            <i th:text="${recipe.getAuthor()}"></i>
+                            <i th:each="k : ${recipe.getIngredients()}" th:text="${k.name}"></i>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </a>
+        </div>
     </div>
 </div>
 </body>
-
 </html>
