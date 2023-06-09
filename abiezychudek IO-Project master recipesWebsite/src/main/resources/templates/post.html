@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Blog :: post</title>
+    <link th:href="@{/PostStyle.css}" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<div class="recipe-post">
+    <div class="recipe-header">
+        <h2 class="title" th:text="${post.title}"></h2>
+        <p th:text="'Created: ' + ${#dates.format(post.createdAt, 'dd-MMM-yyyy')} + ' by '"></p>
+        <a th:text="${post.author}" th:href="@{'/blog/' + ${post.author}}"></a>
+        <div class="rating">Rating: <strong th:text="${post.avgRating}">/5</strong></div>
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-primary">Edit</button>
+        <button type="button" class="btn btn-primary">Delete</button>
+    </div>
+</div>
+<!--    <div class="recipe-image">-->
+<!--        <img th:src="${post.image}" alt="img">-->
+<!--    </div>-->
+<div class="recipe-content">
+    <div class="recipe-details">
+        <ul>
+            <li>
+                <strong>Preparation time: </strong>
+                <span th:text="${post.duration}">h</span>
+            </li>
+            <li>
+                <strong>Difficulty level: </strong>
+                <span th:text="${post.difficulty}">/5</span>
+            </li>
+            <li>
+                <strong>Portion size: </strong>
+                <span th:text="${post.howManyPortions}"></span>
+            </li>
+        </ul>
+        <h3>Ingredients:</h3>
+        <ul>
+            <li th:each="ingredient : ${post.ingredients}" th:text="${ingredient.name}"></li>
+        </ul>
+        <h3>Preparation:</h3>
+        <ol>
+            <li th:each="step : ${post.instructions}" th:text="${step.description}"></li>
+        </ol>
+        <h3>Categories:</h3>
+        <ul>
+            <li th:each="category : ${post.categories}" th:text="${category.name()}"></li>
+        </ul>
+    </div>
+</div>
+</body>
+
+</html>
