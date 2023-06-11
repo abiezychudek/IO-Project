@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Blog :: New Post</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/PostStyle.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+<div class="recipe-post">
+    <form th:action="@{/createPost}" th:object="${postData}" method="post">
+        <h2>Write New Post</h2>
+        <div class="post-input">
+            <label for="title">Title: </label>
+            <input id="title" type="text" th:field="*{title}" />
+        </div>
+        <div class="post-input">
+            <label for="post-category">Category: </label>
+            <select id="post-category" th:field="*{category}" onchange="toggleSpecificFields()">
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Dessert">Dessert</option>
+            </select>
+        </div>
+        <!-- Dodatkowe pola dla poszczególnych kategorii -->
+        <div th:if="${postData.category == 'Breakfast'}">
+            <!-- Pole dla kategorii Breakfast -->
+            <div class="post-input breakfast-specific-field" style="display: none;">
+                <label for="breakfast-specific-field">Vegetarian  </label>
+                <input id="breakfast-specific-field" type="checkbox" th:field="*{vegetarian}" />
+            </div>
+        </div>
+        <div th:if="${postData.category == 'Lunch'}">
+            <!-- Pole dla Lunch -->
+            <div class="post-input lunch-specific-field" style="display: none;">
+                <label for="lunch-specific-field">Fast in making </label>
+                <input id="lunch-specific-field" type="checkbox" th:field="*{fastMaking}" />
+            </div>
+        </div>
+        <div th:if="${postData.category == 'Dinner'}">
+            <!-- Pole dla Dinner -->
+            <div class="post-input dinner-specific-field" style="display: none;">
+                <label for="dinner-specific-field">Lightweight </label>
+                <input id="dinner-specific-field" type="checkbox" th:field="*{lightweight}" />
+            </div>
+        </div>
+        <div th:if="${postData.category == 'Dessert'}">
+            <!-- Pole dla Dessert -->
+            <div class="post-input dessert-specific-field" style="display: none;">
+                <label for="dessert-specific-field">Sweetness Level </label>
+                <input id="dessert-specific-field" type="number" th:field="*{sweetnessLevel}" />
+            </div>
+        </div>
+        <div class="post-input">
+            <label for="post-preparation-time">Preparation time: </label>
+            <input id="post-preparation-time" type="number" step="0.25" data-validation="positive-number" th:field="*{duration}" />
+            <span class="error-message" style="color: red;"></span>
+        </div>
+        <div class="post-input">
+            <label for="post-difficulty-level">Difficulty level (1-5): </label>
+            <input id="post-difficulty-level" type="range" min="1" max="5" data-validation="positive-number" th:field="*{difficulty}" />
+            <span class="error-message" style="color: red;"></span>
+        </div>
+        <div class="post-input">
+            <label for="post-portion-size">Portion size: </label>
+            <input id="post-portion-size" type="number" data-validation="positive-number" th:field="*{howManyPortions}" />
+            <span class="error-message" style="color: red;"></span>
+        </div>
+        <div class="post-input">
+            <label for="image">Image</label>
+            <input id="image" type="text" name="image" th:field="*{imgUrl}" />
+        </div>
+        <div class="submit">
+            <button type="submit" class="btn btn-success">Publish Post</button>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    let inputs = document.querySelectorAll("[data-validation='positive-number']");
+
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener("input", function() {
+            let value = parseFloat(this.value);
+            let errorMessage = this.nextElementSibling;
+
+            if (isNaN(value) || value <= 0) {
+                errorMessage.textContent = "Please enter a positive number.";
+            } else {
+                errorMessage.textContent = "";
+            }
+        });
+    }
+
+    const selectedCategory = categorySelect.value;
+    hideFields([breakfastFields, lunchFields, dinnerFields, dessertFields]);
+    if (selectedCategory === "Breakfast") {
+        showFields(breakfastFields);
+    } else if (selectedCategory === "Lunch") {
+        showFields(lunchFields);
+    } else if (selectedCategory === "Dinner") {
+        showFields(dinnerFields);
+    } else if (selectedCategory === "Dessert") {
+        showFields(dessertFields);
+    }
+    }
+    function showFields(fields) {
+        fields.forEach(field => {
+            field.style.display = "block";
+        });
+    }
+    function hideFields(fieldArrays) {
+        fieldArrays.forEach(fields => {
+            fields.forEach(field => {
+                field.style.display = "none";
+            });
+        });
+    }
+    toggleSpecificFields();
+    categorySelect.addEventListener("change", toggleSpecificFields);
+
+</script>
+
+</body>
+
+</html>
