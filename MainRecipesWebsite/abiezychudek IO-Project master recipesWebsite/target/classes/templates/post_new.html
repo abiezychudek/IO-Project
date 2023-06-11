@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Blog :: New Post</title>
+    <link rel="stylesheet" type="text/css" href="PostStyle.css">
+</head>
+
+<body>
+<div class="recipe-post">
+    <form th:action="@{/createPost}" th:object="${post}" method="post">
+        <h2>Write New Post</h2>
+        <div class="post-input">
+            <label for="title">Title: </label>
+            <input id="title" type="text" th:field="*{title}" />
+        </div>
+        <div class="post-input">
+            <label for="post-preparation-time">Preparation time: </label>
+            <input id="post-preparation-time" type="number" data-validation="positive-number" th:field="*{duration}" />
+            <span class="error-message" style="color: red;"></span>
+        </div>
+        <div class="post-input">
+            <label for="post-difficulty-level">Difficulty level (1-5): </label>
+            <input id="post-difficulty-level" type="number" data-validation="positive-number" th:field="*{difficulty}" />
+            <span class="error-message" style="color: red;"></span>
+        </div>
+        <div class="post-input">
+            <label for="post-portion-size">Portion size: </label>
+            <input id="post-portion-size" type="number" data-validation="positive-number" th:field="*{howManyPortions}" />
+            <span class="error-message" style="color: red;"></span>
+        </div>
+        <div class="post-input">
+            <label for="image">Image</label>
+            <input id="image" type="file" name="image" accept="image/*" />
+        </div>
+        <h3>Ingredients:</h3>
+        <ul>
+            <li th:each="ingredient, ingredientStat : *{ingredients}">
+                <label>
+                    <input type="text" th:field="*{ingredients[__${ingredientStat.index}__].name}" />
+                </label>
+                <button type="button" onclick="removeIngredient(${ingredientStat.index})" class="btn btn-danger">Remove</button>
+            </li>
+        </ul>
+        <button type="button" onclick="addIngredient()" class="btn btn-primary">Add Ingredient</button>
+        <h3>Steps:</h3>
+        <ol>
+            <li th:each="step, stepStat : *{instructions}">
+                <label>
+                    <input type="text" th:field="*{instructions[__${stepStat.index}__].description}" />
+                </label>
+                <button type="button" onclick="removeStep(${stepStat.index})" class="btn btn-danger">Remove</button>
+            </li>
+        </ol>
+        <button type="button" onclick="addStep()" class="btn btn-primary">Add Step</button>
+        <div class="submit">
+            <button type="submit" class="btn btn-success">Publish Post</button>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    let inputs = document.querySelectorAll("[data-validation='positive-number']");
+
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener("input", function() {
+            let value = parseFloat(this.value);
+            let errorMessage = this.nextElementSibling;
+
+            if (isNaN(value) || value <= 0) {
+                errorMessage.textContent = "Please enter a positive number.";
+            } else {
+                errorMessage.textContent = "";
+            }
+        });
+    }
+    function addIngredient() {
+        let ingredientIndex = document.querySelectorAll("ul > li").length;
+        let ingredientElement = document.createElement("li");
+        ingredientElement.innerHTML =
+            '<input type="text" th:field="*{ingredients[__' + ingredientIndex + '__].name}" />' +
+            '<button type="button" onclick="removeIngredient(' + ingredientIndex + ')" class="btn btn-danger">Remove</button>';
+        document.querySelector("ul").appendChild(ingredientElement);
+    }
+
+    function removeIngredient(index) {
+        document.querySelectorAll("ul > li")[index].remove();
+    }
+
+    function addStep() {
+        let stepIndex = document.querySelectorAll("ol > li").length;
+        let stepElement = document.createElement("li");
+        stepElement.innerHTML =
+            '<input type="text" th:field="*{instructions[__' + stepIndex + '__].description}" />' +
+            '<button type="button" onclick="removeStep(' + stepIndex + ')" class="btn btn-danger">Remove</button>';
+        document.querySelector("ol").appendChild(stepElement);
+    }
+
+    function removeStep(index) {
+        document.querySelectorAll("ol > li")[index].remove();
+    }
+</script>
+
+</body>
+
+</html>
