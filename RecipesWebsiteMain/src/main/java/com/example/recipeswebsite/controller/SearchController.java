@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class SearchController {
@@ -28,6 +30,7 @@ public class SearchController {
 
         //List<Post> postsFiltered = posts.stream().filter(p -> p.getIngredients().contains(ingr.ingrdts)).collect(Collectors.toList());
         List<Post> posts = postService.getAll();
+        Collections.reverse(posts);
         List<Post> postsOutput = new ArrayList<Post>();
 
         if(searchedIngredients.getIngrdts() != null){
@@ -35,12 +38,15 @@ public class SearchController {
             List <CategoryInterface.Categories> ingList = List.of(searchedIngredients.getIngrdts());
 
             for (Post p : posts){
-                for(CategoryInterface.Categories i : p.getCategories()){
-                    if(ingList.contains(i)){
-                        postsOutput.add(p);
-                        break;
+                if(p.getCategories() != null){
+                    for(CategoryInterface.Categories i : p.getCategories()){
+                        if(ingList.contains(i)){
+                            postsOutput.add(p);
+                            break;
+                        }
                     }
                 }
+
             }
 
         } else if(!searchedIngredients.getName().equals("")){
