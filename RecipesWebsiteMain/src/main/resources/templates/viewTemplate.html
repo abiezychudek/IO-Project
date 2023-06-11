@@ -29,7 +29,9 @@
             <li><a th:href="@{/}">Home</a>
                 <!-- <li><a href="#">Popular</a></li> -->
             <li><a href="/rank">Recipe ranking</a></li>
+            <ul sec:authorize="isAuthenticated()">
             <li><a href="/createPost">Create post</a></li>
+            </ul>
         </ul>
     </div>
     <div class="top-search">
