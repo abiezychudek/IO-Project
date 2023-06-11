@@ -35,7 +35,18 @@ The Recipe Blog Website is a platform that allows users to share and discover re
 
 ## Installation
 
-...?
+1. Clone the repository
+ If you have git installed, this is a recommended approach as you can easily update the repository. Simply run the following command:
+ `git clone https://github.com/abiezychudek/IO-Project.git`
+ Alternatively, you can also download the zip file of the repository at the top of the main repository page.
+ 2. Pre-requisites
+ Before you can run this project, you must have the following installed:
+ - Java (version 17 or later)
+ - Maven (for managing and building the project)
+ 3. Building the project
+ Navigate to the directory where you cloned the repository and execute the following command:
+ `mvn clean install`.
+ This will install the necessary dependencies and build the project.
 
 ## Usage
 
@@ -47,9 +58,9 @@ The Recipe Blog Website is a platform that allows users to share and discover re
 
 ## Testing
 
-The Recipe Blog Website includes unit tests to ensure the functionality of its components. Mockito is used as the mocking framework. To run the tests 
-
-...?
+The Recipe Blog Website includes unit tests to ensure the functionality of its components. Mockito is used as the mocking framework. To run the tests execute the following command:
+ `mvn test`.
+The results of the tests will be displayed in the terminal.
 
 
 ## Technologies
