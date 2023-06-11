@@ -26,6 +26,7 @@ public class Post implements CategoryInterface {
     private String title;
     private String author;
     private double avgRating;
+    private int numOfRatings;
     private String imgUrl;
     private double duration;
     private double difficulty;
