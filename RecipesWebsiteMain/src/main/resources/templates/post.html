@@ -4,10 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Blog :: post</title>
-    <link th:href="@{/css/PostStyle.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
+<div class="container">
+<div th:replace="@{/viewTemplate}::header"> </div>
 <div class="recipe-post">
     <div class="recipe-header">
         <h2 class="title" th:text="${post.title}"></h2>
@@ -69,6 +71,7 @@
         <span th:text="'Created: ' + ${#dates.format(comment.createdAt, 'dd-MMM-yyyy')} + ' by ' + ${comment.author}"></span>
         <p th:text="${comment.getContent()}"></p>
     </div>
+</div>
 </div>
 </body>
 
