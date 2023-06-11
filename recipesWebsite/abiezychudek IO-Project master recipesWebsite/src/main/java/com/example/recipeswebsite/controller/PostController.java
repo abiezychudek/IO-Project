@@ -4,9 +4,12 @@ import com.example.recipeswebsite.Factory.PostData;
 import com.example.recipeswebsite.services.PostFactory;
 import com.example.recipeswebsite.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+
 
 import java.util.Optional;
 
@@ -28,7 +31,9 @@ public class PostController {
     }
 
     @PostMapping("/createPost")
-    public String createPost(@ModelAttribute("postData") PostData postData) {
+    public String createPost(@ModelAttribute("postData") PostData postData, Authentication authentication) {
+        String author = authentication.getName() ;
+        postData.setAuthor(author);
         Post post = postFactory.createPost(postData);
         postFactory.save(post);
         if (post.getId() != null) {

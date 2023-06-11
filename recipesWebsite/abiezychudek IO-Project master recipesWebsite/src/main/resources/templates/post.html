@@ -11,8 +11,8 @@
 <div class="recipe-post">
     <div class="recipe-header">
         <h2 class="title" th:text="${post.title}"></h2>
-        <p th:text="'Created: ' + ${#dates.format(post.createdAt, 'dd-MMM-yyyy')} + ' by '"></p>
-        <a th:text="${post.author}"></a>
+        <p th:text="'Created: ' + ${#dates.format(post.createdAt, 'dd-MMM-yyyy')} + ' by ' + ${post.author}"}></p>
+        <a ></a>
         <div class="rating">Rating: <strong th:text="${post.avgRating}">/5</strong></div>
     </div>
     <div class="row">
@@ -21,7 +21,7 @@
     </div>
 </div>
     <div class="recipe-image">
-        <img th:src="${post.imgUrl}" alt="img">
+        <img th:src="${post.imgUrl}" alt="">
     </div>
 <div class="recipe-content">
     <div class="recipe-details">
