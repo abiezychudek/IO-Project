@@ -6,7 +6,6 @@ This is a simple recipe blog website built with Java, Spring Framework, HTML, CS
 
 - [Introduction](#introduction)
 - [Features](#features)
-- [To do List](#To)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing](#testing)
@@ -55,6 +54,7 @@ The Recipe Blog Website is a platform that allows users to share and discover re
 The Recipe Blog Website includes unit tests to ensure the functionality of its components. Mockito is used as the mocking framework. To run the tests execute the following command:
  `mvn test`.
 The results of the tests will be displayed in the terminal.
+
 
 
 ## Technologies
