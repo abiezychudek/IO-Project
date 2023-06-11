@@ -1,5 +1,6 @@
 package com.example.recipeswebsite.controller;
 
+import com.example.recipeswebsite.model.Comment;
 import com.example.recipeswebsite.model.Post;
 import com.example.recipeswebsite.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -26,12 +29,23 @@ public class PostController {
 
     @GetMapping("/createPost")
     public String showCreateForm(Model model) {
-        model.addAttribute("post", new Post());
+        Post newPost = new Post();
+
+        if(newPost.getIngredients() == null){
+            newPost.setIngredients(new ArrayList<String>());
+        }
+
+        if(newPost.getInstructions() == null){
+            newPost.setInstructions(new ArrayList<String>());
+        }
+
+        model.addAttribute("post", newPost);
         return "post_new";
     }
 
     @PostMapping("/createPost")
     public String createPost(@ModelAttribute("post") Post post) {
+
         Post savedPost = postService.save(post);
         return "redirect:/" ;
     }
@@ -44,12 +58,21 @@ public class PostController {
         // if the post exists, then shove it into the model
         if (optionalPost.isPresent()) {
             Post post = optionalPost.get();
-            post.setCreatedAt(new Date());
             model.addAttribute("post", post);
+            model.addAttribute("comment", new Comment());
             return "post";
         } else {
             return "404";
         }
+    }
+
+    @PostMapping("/posts/{id}")
+    public String addComment(@PathVariable Long id, @ModelAttribute("comment") Comment comment, Model model) {
+
+        postService.addCommentToPost(id, comment);
+
+        return "redirect:/posts/" + id;
+
     }
 
     /*
