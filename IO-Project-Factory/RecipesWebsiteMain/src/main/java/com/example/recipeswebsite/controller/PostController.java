@@ -70,6 +70,15 @@ public class PostController {
         return "redirect:/posts/" + id;
 
     }
+    
+     @PostMapping("/posts/rating/{id}")
+    public String addRating(@PathVariable Long id, @RequestParam double rating, Model model) {
+
+        postFactory.addRatingToPost(id, rating);
+
+        return "redirect:/posts/" + id;
+
+    }
 
     /*
     @GetMapping("/posts/{id}/edit")
