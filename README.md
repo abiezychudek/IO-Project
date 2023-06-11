@@ -1,3 +1,4 @@
+
 # Recipe Blog Website
 
 This is a simple recipe blog website built with Java, Spring Framework, HTML, CSS, and Mockito.
@@ -55,6 +56,8 @@ The Recipe Blog Website includes unit tests to ensure the functionality of its c
  `mvn test`.
 The results of the tests will be displayed in the terminal.
 
+## UML
+![Open photo](https://scontent.xx.fbcdn.net/v/t1.15752-9/352860646_785059846326539_2872095672573447524_n.png?stp=dst-png_p206x206&_nc_cat=111&ccb=1-7&_nc_sid=aee45a&_nc_ohc=GiA-PciQzkEAX_oC0Rw&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdQygxw6tj45SX9fRWmMOVELgDGIohF2xdgepWKBhPzFlA&oe=64ADBC72)
 
 
 ## Technologies
@@ -66,3 +69,5 @@ We would like to acknowledge the following open-source projects and libraries th
 - [Thymeleaf](https://www.thymeleaf.org/)
 - [Lombok](https://projectlombok.org/)
 - [Mockito](https://site.mockito.org/)
+
+
