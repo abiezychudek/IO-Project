@@ -6,11 +6,11 @@ This is a simple recipe blog website built with Java, Spring Framework, HTML, CS
 
 - [Introduction](#introduction)
 - [Features](#features)
-- [To do List](#To-Do)
+- [To do List](#To)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing](#testing)
-- [Acknowledgments](#acknowledgments)
+- [Technologies](#technologies)
 
 ## Introduction
 
@@ -24,7 +24,7 @@ The Recipe Blog Website is a platform that allows users to share and discover re
 - Comments: Users can leave comments to share their feedback and ask questions.
 
 
-## To-Do List
+## To Do List
 
 ✅ Comments: Users can leave comments to share their feedback and ask questions.
 - [ ] Recipe Rating: Users can rate recipes
@@ -49,7 +49,7 @@ The Recipe Blog Website includes unit tests to ensure the functionality of its c
 ...?
 
 
-## Acknowledgments
+## Technologies
 
 We would like to acknowledge the following open-source projects and libraries that made this project possible:
 
