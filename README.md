@@ -12,6 +12,9 @@ This is a simple recipe blog website built with Java, Spring Framework, HTML, CS
 - [Testing](#testing)
 - [Technologies](#technologies)
 
+## Home page view
+![homePage](https://github.com/abiezychudek/IO-Project/assets/122232469/228ad49d-fe2d-482e-8190-96dbf4ae7b73)
+
 ## Introduction
 
 The Recipe Blog Website is a platform that allows users to share and discover recipes. It provides a user-friendly interface for browsing recipes, creating new ones, and interacting with other food enthusiasts. The website is built using Java with Spring Framework, utilizing Spring Web for handling web requests, Spring Data JPA for persistence with H2 Database, Thymeleaf for server-side HTML rendering, Lombok for reducing boilerplate code, and Mockito for testing.
