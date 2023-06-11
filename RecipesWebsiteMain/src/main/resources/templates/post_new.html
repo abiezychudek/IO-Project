@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Blog :: New Post</title>
-    <link rel="stylesheet" type="text/css" href="PostStyle.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/PostStyle.css}">
 </head>
 
 <body>
@@ -38,7 +38,7 @@
         <ul>
             <li th:each="ingredient, ingredientStat : *{ingredients}">
                 <label>
-                    <input type="text" th:field="*{ingredients[__${ingredientStat.index}__].name}" />
+                    <input type="text" th:field="*{ingredients[__${ingredientStat.index}__]}" />
                 </label>
                 <button type="button" onclick="removeIngredient(${ingredientStat.index})" class="btn btn-danger">Remove</button>
             </li>
@@ -48,7 +48,7 @@
         <ol>
             <li th:each="step, stepStat : *{instructions}">
                 <label>
-                    <input type="text" th:field="*{instructions[__${stepStat.index}__].description}" />
+                    <input type="text" th:field="*{instructions[__${stepStat.index}__]}" />
                 </label>
                 <button type="button" onclick="removeStep(${stepStat.index})" class="btn btn-danger">Remove</button>
             </li>
