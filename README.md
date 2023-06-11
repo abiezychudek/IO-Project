@@ -57,7 +57,8 @@ The Recipe Blog Website includes unit tests to ensure the functionality of its c
 The results of the tests will be displayed in the terminal.
 
 ## UML
-![Open photo](https://scontent.xx.fbcdn.net/v/t1.15752-9/352860646_785059846326539_2872095672573447524_n.png?stp=dst-png_p206x206&_nc_cat=111&ccb=1-7&_nc_sid=aee45a&_nc_ohc=GiA-PciQzkEAX_oC0Rw&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdQygxw6tj45SX9fRWmMOVELgDGIohF2xdgepWKBhPzFlA&oe=64ADBC72)
+![352860646_785059846326539_2872095672573447524_n](https://github.com/abiezychudek/IO-Project/assets/122232469/3fbae165-72e7-4d71-8709-7e287c41c1cb)
+
 
 
 ## Technologies
