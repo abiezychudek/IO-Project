@@ -54,6 +54,7 @@
     </div>
 </div>
 <hr>
+<ul sec:authorize="isAuthenticated()">
 <div class="add-comment">
     <form th:object="${post}" th:action="@{/posts/__${post.id}__}" method="post">
         <div th:object="${comment}">
@@ -62,6 +63,7 @@
         <button class="btn btn-primary" type="submit" style="margin-bottom: 15px">Add comment</button>
     </form>
 </div>
+</ul>
 <div class="comment-section">
     <div class="comment-object" th:each="comment : ${post.getComments()}">
         <span th:text="'Created: ' + ${#dates.format(comment.createdAt, 'dd-MMM-yyyy')} + ' by ' + ${comment.author}"></span>
