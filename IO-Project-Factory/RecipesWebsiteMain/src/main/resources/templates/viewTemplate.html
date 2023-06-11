@@ -34,6 +34,9 @@
             </ul>
         </ul>
     </div>
+</div>
+
+<div th:fragment = "top-search">
     <div class="top-search">
         <form action="#" th:action="@{/}" method="post" th:object="${ingr}">
             <input type="text" th:field="*{name}" placeholder="Search..." name="search">
@@ -48,6 +51,7 @@
 
     </div>
 </div>
+
 <div th:fragment = "left-search">
 
     <form action="#" th:action="@{/}" method="post" th:object="${ingr}">
