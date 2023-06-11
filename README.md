@@ -21,11 +21,13 @@ The Recipe Blog Website is a platform that allows users to share and discover re
 - User Registration: Users can create an account to access additional features, such as submitting their own recipes.
 - Recipe Browsing: Users can browse a collection of recipes, view recipe details, search for recipes, and filter results based on various criteria, such as ingredients.
 - Recipe Creation and Editing: Registered users can create new recipes, providing details such as ingredients, preparation steps, cooking time, and images. They can also edit or delete their own recipes.
+- Comments: Users can leave comments to share their feedback and ask questions.
 
 
 ## To-Do List
 
-- [ ] Recipe Rating and Comments: Users can rate recipes and leave comments to share their feedback and ask questions.
+- ✅ Comments: Users can leave comments to share their feedback and ask questions.
+- [ ] Recipe Rating: Users can rate recipes
 - [ ] User Profiles: Each user has a profile page that displays their submitted recipes, favorite recipes, and other relevant information.
 
 ## Installation
