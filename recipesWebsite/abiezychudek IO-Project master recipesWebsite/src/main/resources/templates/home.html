@@ -22,7 +22,6 @@
                         <div class="recipe-item-footer">
                             <p th:text="${recipe.getTitle()}"></p>
                             <i th:text="${recipe.getAuthor()}"></i>
-                            <i th:each="k : ${recipe.getIngredients()}" th:text="${k.name}"></i>
                         </div>
                     </a>
                 </div>

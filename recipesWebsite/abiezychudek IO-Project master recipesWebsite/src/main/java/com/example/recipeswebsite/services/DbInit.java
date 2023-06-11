@@ -1,5 +1,6 @@
 package com.example.recipeswebsite.services;
 
+import com.example.recipeswebsite.Factory.PostData;
 import com.example.recipeswebsite.model.CategoryInterface;
 import com.example.recipeswebsite.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,7 @@ import java.util.List;
 
 @Configuration
 public class DbInit implements CommandLineRunner, CategoryInterface {
-
-    private final PostService postService;
+    private final PostFactory postFactory;
 
     private List<Categories> categories = new ArrayList<Categories>(Arrays.asList(Categories.values()));
     private List<Categories> categoriesTwo = new ArrayList<Categories>(Arrays.asList(Categories.POTATO, Categories.CARROT));
@@ -26,17 +26,40 @@ public class DbInit implements CommandLineRunner, CategoryInterface {
     );
 
     @Autowired
-    public DbInit(PostService postService){
-        this.postService = postService;
+    public DbInit(PostFactory postFactory){
+        this.postFactory = postFactory;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        postService.saveAll(List.of(
-                new Post(null, "Ratatouille", "Edward Shchypka", 2.76, "https://posilkiwchorobie.pl/wp-content/uploads/2020/03/ratatouille.jpg", 2, 3, 4, categories, null, null, null),
-                new Post(null, "Pasta", "Juan Rosec", 3.5, "https://www.mojegotowanie.pl/media/cache/default_view/uploads/media/recipe/0002/35/danie-jednogarnkowe-z-makaronem.jpg", 2, 3, 4, categoriesThree, null, null, null),
-                new Post(null, "Lasagne", "Rafael Lavazza", 3.4, "https://ocdn.eu/pulscms-transforms/1/bsBk9kpTURBXy9lYjRkMjkyOTRiZDg5OWFhMzM2YTAwNzI5YjhjZTVlOS5qcGeTlQMAHs0D6M0CMpMFzQSwzQKkkwmmZDYyZmZiBt4AAaEwAQ/pasticcio.jpg", 2, 3, 4, categoriesTwo, null, null, null),
-                new Post(null, "Boczek", "Arthur Pole'anzki", 4.8, "https://staticsmaker.iplsc.com/smaker_production_2022_03_18/c4b0f3fbdefccc306c44697ac7b57c5f-lg.jpg", 4, 1, 3, new ArrayList<Categories>(Arrays.asList(Categories.CUCUMBER, Categories.PEPPER, Categories.ONION)), null, null, null)
-        ));
+
+        PostData postData1 = new PostData();
+        postData1.setCategory("BREAKFAST");
+        postData1.setTitle("Good Old-Fashioned Pancakes");
+        postData1.setAuthor("John Doe");
+        postData1.setImgUrl("https://www.allrecipes.com/thmb/XUxAXBMsoGtslJpRMgYeqQBjTZw=/750x0/filters:no_upscale():max_bytes(150000):strip_icc()/21014-Good-old-Fashioned-Pancakes-mfs_001-1fa26bcdedc345f182537d95b6cf92d8.jpg");
+        postData1.setDuration(1.5);
+        postData1.setDifficulty(2);
+        postData1.setHowManyPortions(4);
+        postData1.setDescription("Description of breakfast.");
+        postData1.setVegetarian(true);
+
+        PostData postData2 = new PostData();
+        postData2.setCategory("Dessert");
+        postData2.setTitle("Mini Pancake Parfait");
+        postData2.setAuthor("John Doe");
+        postData2.setImgUrl("https://www.allrecipes.com/thmb/N3RFvTuI4mRtKdVcxMfsRqRTIeU=/750x0/filters:no_upscale():max_bytes(150000):strip_icc()/7506803-mini-pancake-parfait-GOLDMAN-4x3-2488-9fc0d363ef1f49eaaa975b31705b747e.jpg");
+        postData2.setDuration(1);
+        postData2.setDifficulty(3);
+        postData2.setHowManyPortions(4);
+        postData2.setDescription("Description of dessert.");
+        postData2.setSweetnessLevel(2);
+
+        Post post1 = postFactory.createPost(postData1);
+        Post post2 = postFactory.createPost(postData2);
+
+
+        postFactory.saveAll(List.of(post1, post2));
+        postFactory.save(post1);
     }
 }

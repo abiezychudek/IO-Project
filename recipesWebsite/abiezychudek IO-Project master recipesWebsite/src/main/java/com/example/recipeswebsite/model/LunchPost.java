@@ -1,6 +1,8 @@
-package com.example.recipeswebsite.Factory;
+package com.example.recipeswebsite.model;
 
+import com.example.recipeswebsite.Factory.PostData;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "lunch_post")
 public class LunchPost extends Post {
     private boolean isFastMaking;
 

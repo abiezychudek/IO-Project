@@ -2,7 +2,7 @@ package com.example.recipeswebsite.controller;
 
 import com.example.recipeswebsite.model.Post;
 import com.example.recipeswebsite.model.Search;
-import com.example.recipeswebsite.services.PostService;
+import com.example.recipeswebsite.services.PostFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +15,17 @@ import java.util.stream.Collectors;
 @Controller
 public class RankingController {
 
-    private final PostService postService;
+    private final PostFactory postFactory;
 
     @Autowired
-    public RankingController(PostService postService){
-        this.postService = postService;
+    public RankingController(PostFactory postFactory){
+        this.postFactory = postFactory;
     }
 
     @GetMapping("/rank")
     public String getRanking(Model model){
 
-        List<Post> postsSorted = postService.getAll().stream().sorted(Comparator.comparingDouble(Post::getAvgRating).reversed()).collect(Collectors.toList());
+        List<Post> postsSorted = postFactory.getAll().stream().sorted(Comparator.comparingDouble(Post::getAvgRating).reversed()).collect(Collectors.toList());
         model.addAttribute("recipes", postsSorted);
         model.addAttribute("ingr", new Search());
         return "recipesRanking";

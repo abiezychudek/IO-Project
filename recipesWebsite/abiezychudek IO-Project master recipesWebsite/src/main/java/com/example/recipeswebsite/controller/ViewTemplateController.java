@@ -3,7 +3,7 @@ package com.example.recipeswebsite.controller;
 import com.example.recipeswebsite.model.CategoryInterface;
 import com.example.recipeswebsite.model.Post;
 import com.example.recipeswebsite.model.Search;
-import com.example.recipeswebsite.services.PostService;
+import com.example.recipeswebsite.services.PostFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,17 +14,17 @@ import java.util.List;
 @Controller
 public class ViewTemplateController implements CategoryInterface {
 
-    private final PostService postService;
+    private final PostFactory postFactory;
 
     @Autowired
-    public ViewTemplateController(PostService postService){
-        this.postService = postService;
+    public ViewTemplateController(PostFactory postFactory){
+        this.postFactory = postFactory;
     }
 
     @GetMapping("/viewTemplate")
     public String home(Model model){
 
-        List<Post> posts = postService.getAll();
+        List<Post> posts = postFactory.getAll();
         model.addAttribute("recipes", posts);
         model.addAttribute("ingr", new Search());
         return "viewTemplate";

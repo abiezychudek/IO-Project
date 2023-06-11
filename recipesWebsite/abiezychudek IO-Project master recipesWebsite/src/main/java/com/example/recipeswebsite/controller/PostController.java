@@ -1,54 +1,53 @@
 package com.example.recipeswebsite.controller;
 
+import com.example.recipeswebsite.Factory.PostData;
+import com.example.recipeswebsite.services.PostFactory;
 import com.example.recipeswebsite.model.Post;
-import com.example.recipeswebsite.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 
 @Controller
 public class PostController {
 
-    private final PostService postService;
+    private final PostFactory postFactory;
 
     @Autowired
-    public PostController(PostService postService) {
-        this.postService = postService;
+    public PostController(PostFactory postFactory) {
+        this.postFactory = postFactory;
     }
+
 
     @GetMapping("/createPost")
     public String showCreateForm(Model model) {
-        model.addAttribute("post", new Post());
+        model.addAttribute("postData", new PostData());
         return "post_new";
     }
 
     @PostMapping("/createPost")
-    public String createPost(@ModelAttribute("post") Post post) {
-        Post savedPost = postService.save(post);
-        return "redirect:/" ;
+    public String createPost(@ModelAttribute("postData") PostData postData) {
+        Post post = postFactory.createPost(postData);
+        postFactory.save(post);
+        if (post.getId() != null) {
+            return "redirect:/posts/" + post.getId();
+        } else {
+            return "post_new";
+        }
     }
 
 
     @GetMapping("/posts/{id}")
     public String getPost(@PathVariable Long id, Model model) {
-        // find post by id
-        Optional<Post> optionalPost = postService.getById(id);
-        // if the post exists, then shove it into the model
+        Optional<Post> optionalPost = postFactory.getById(id);
         if (optionalPost.isPresent()) {
             Post post = optionalPost.get();
-            post.setCreatedAt(new Date());
             model.addAttribute("post", post);
             return "post";
         } else {
-            return "404";
+            return "home";
         }
     }
 

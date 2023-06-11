@@ -1,13 +1,11 @@
 package com.example.recipeswebsite.model;
 
+import com.example.recipeswebsite.Factory.PostData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
-
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Post implements CategoryInterface {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Post {
 
     @Id
     @GeneratedValue
@@ -28,16 +27,10 @@ public class Post implements CategoryInterface {
     private double duration;
     private double difficulty;
     private double howManyPortions;
-    private List<Categories> categories;
+//    private List<Categories> categories;
+    private String description;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinColumn(name="ingredient_id", referencedColumnName = "id", nullable = false)
-    private List<Ingredient> ingredients;
-
-    @OneToMany(cascade = {CascadeType.ALL})
-    @JoinColumn(name="step_id", referencedColumnName = "id", nullable = false)
-    private List<Step> instructions;
-
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
     /*@NotNull
@@ -45,7 +38,16 @@ public class Post implements CategoryInterface {
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
     private Account account;*/
 
-
-
+    public Post(PostData postData) {
+        this.title = postData.getTitle();
+        this.author = postData.getAuthor();
+        this.avgRating = postData.getAvgRating();
+        this.imgUrl = postData.getImgUrl();
+        this.duration = postData.getDuration();
+        this.difficulty = postData.getDifficulty();
+        this.howManyPortions = postData.getHowManyPortions();
+        this.description = postData.getDescription();
+        this.createdAt = postData.getCreatedAt();
+    }
 
 }

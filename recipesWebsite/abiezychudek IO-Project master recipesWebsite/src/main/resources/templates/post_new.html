@@ -4,25 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Blog :: New Post</title>
-    <link rel="stylesheet" type="text/css" href="PostStyle.css">
+    <link rel="stylesheet" th:href="@{/PostStyle.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
 <div class="recipe-post">
-    <form th:action="@{/createPost}" th:object="${post}" method="post">
+    <form th:action="@{/createPost}" th:object="${postData}" method="post">
         <h2>Write New Post</h2>
         <div class="post-input">
             <label for="title">Title: </label>
             <input id="title" type="text" th:field="*{title}" />
         </div>
         <div class="post-input">
+            <label for="post-category">Category: </label>
+            <select id="post-category" th:field="*{category}" onchange="toggleSpecificFields()">
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Dessert">Dessert</option>
+            </select>
+        </div>
+        <!-- Dodatkowe pola dla poszczególnych kategorii -->
+        <div th:if="${postData.category == 'Breakfast'}">
+            <!-- Pole dla kategorii Breakfast -->
+            <div class="post-input breakfast-specific-field" style="display: none;">
+                <label for="breakfast-specific-field">Vegetarian  </label>
+                <input id="breakfast-specific-field" type="checkbox" th:field="*{vegetarian}" />
+            </div>
+        </div>
+        <div th:if="${postData.category == 'Lunch'}">
+            <!-- Pole dla Lunch -->
+            <div class="post-input lunch-specific-field" style="display: none;">
+                <label for="lunch-specific-field">Fast in making </label>
+                <input id="lunch-specific-field" type="checkbox" th:field="*{fastMaking}" />
+            </div>
+        </div>
+        <div th:if="${postData.category == 'Dinner'}">
+            <!-- Pole dla Dinner -->
+            <div class="post-input dinner-specific-field" style="display: none;">
+                <label for="dinner-specific-field">Lightweight </label>
+                <input id="dinner-specific-field" type="checkbox" th:field="*{lightweight}" />
+            </div>
+        </div>
+        <div th:if="${postData.category == 'Dessert'}">
+            <!-- Pole dla Dessert -->
+            <div class="post-input dessert-specific-field" style="display: none;">
+                <label for="dessert-specific-field">Sweetness Level </label>
+                <input id="dessert-specific-field" type="number" th:field="*{sweetnessLevel}" />
+            </div>
+        </div>
+        <div class="post-input">
             <label for="post-preparation-time">Preparation time: </label>
-            <input id="post-preparation-time" type="number" data-validation="positive-number" th:field="*{duration}" />
+            <input id="post-preparation-time" type="number" step="0.25" data-validation="positive-number" th:field="*{duration}" />
             <span class="error-message" style="color: red;"></span>
         </div>
         <div class="post-input">
             <label for="post-difficulty-level">Difficulty level (1-5): </label>
-            <input id="post-difficulty-level" type="number" data-validation="positive-number" th:field="*{difficulty}" />
+            <input id="post-difficulty-level" type="range" min="1" max="5" data-validation="positive-number" th:field="*{difficulty}" />
             <span class="error-message" style="color: red;"></span>
         </div>
         <div class="post-input">
@@ -32,31 +71,17 @@
         </div>
         <div class="post-input">
             <label for="image">Image</label>
-            <input id="image" type="file" name="image" accept="image/*" />
+            <input id="image" type="text" name="image" />
         </div>
-        <h3>Ingredients:</h3>
-        <ul>
-            <li th:each="ingredient, ingredientStat : *{ingredients}">
-                <label>
-                    <input type="text" th:field="*{ingredients[__${ingredientStat.index}__].name}" />
-                </label>
-                <button type="button" onclick="removeIngredient(${ingredientStat.index})" class="btn btn-danger">Remove</button>
-            </li>
-        </ul>
-        <button type="button" onclick="addIngredient()" class="btn btn-primary">Add Ingredient</button>
-        <h3>Steps:</h3>
-        <ol>
-            <li th:each="step, stepStat : *{instructions}">
-                <label>
-                    <input type="text" th:field="*{instructions[__${stepStat.index}__].description}" />
-                </label>
-                <button type="button" onclick="removeStep(${stepStat.index})" class="btn btn-danger">Remove</button>
-            </li>
-        </ol>
-        <button type="button" onclick="addStep()" class="btn btn-primary">Add Step</button>
+        <div class="post-input description">
+            <label for="description">Describe how to make this recipe: </label>
+            <textarea id="description" rows="8" cols="50" style="width: 300px; height: 100px; display: block" th:field="*{description}"></textarea>
+        </div>
+
         <div class="submit">
             <button type="submit" class="btn btn-success">Publish Post</button>
         </div>
+
     </form>
 </div>
 
@@ -76,31 +101,47 @@
             }
         });
     }
-    function addIngredient() {
-        let ingredientIndex = document.querySelectorAll("ul > li").length;
-        let ingredientElement = document.createElement("li");
-        ingredientElement.innerHTML =
-            '<input type="text" th:field="*{ingredients[__' + ingredientIndex + '__].name}" />' +
-            '<button type="button" onclick="removeIngredient(' + ingredientIndex + ')" class="btn btn-danger">Remove</button>';
-        document.querySelector("ul").appendChild(ingredientElement);
+
+    const categorySelect = document.getElementById("post-category");
+    const breakfastFields = document.querySelectorAll(".breakfast-specific-field");
+    const lunchFields = document.querySelectorAll(".lunch-specific-field");
+    const dinnerFields = document.querySelectorAll(".dinner-specific-field");
+    const dessertFields = document.querySelectorAll(".dessert-specific-field");
+
+    function toggleSpecificFields() {
+        const selectedCategory = categorySelect.value;
+
+        hideFields([breakfastFields, lunchFields, dinnerFields, dessertFields]);
+
+        if (selectedCategory === "Breakfast") {
+            showFields(breakfastFields);
+        } else if (selectedCategory === "Lunch") {
+            showFields(lunchFields);
+        } else if (selectedCategory === "Dinner") {
+            showFields(dinnerFields);
+        } else if (selectedCategory === "Dessert") {
+            showFields(dessertFields);
+        }
     }
 
-    function removeIngredient(index) {
-        document.querySelectorAll("ul > li")[index].remove();
+    function showFields(fields) {
+        fields.forEach(field => {
+            field.style.display = "block";
+        });
     }
 
-    function addStep() {
-        let stepIndex = document.querySelectorAll("ol > li").length;
-        let stepElement = document.createElement("li");
-        stepElement.innerHTML =
-            '<input type="text" th:field="*{instructions[__' + stepIndex + '__].description}" />' +
-            '<button type="button" onclick="removeStep(' + stepIndex + ')" class="btn btn-danger">Remove</button>';
-        document.querySelector("ol").appendChild(stepElement);
+    function hideFields(fieldArrays) {
+        fieldArrays.forEach(fields => {
+            fields.forEach(field => {
+                field.style.display = "none";
+            });
+        });
     }
 
-    function removeStep(index) {
-        document.querySelectorAll("ol > li")[index].remove();
-    }
+    toggleSpecificFields();
+    categorySelect.addEventListener("change", toggleSpecificFields);
+
+
 </script>
 
 </body>
