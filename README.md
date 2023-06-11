@@ -27,12 +27,6 @@ The Recipe Blog Website is a platform that allows users to share and discover re
 - Comments: Users can leave comments to share their feedback and ask questions.
 
 
-## To Do List
-
-✅ Comments: Users can leave comments to share their feedback and ask questions.
-- [ ] Recipe Rating: Users can rate recipes
-- [ ] User Profiles: Each user has a profile page that displays their submitted recipes, favorite recipes, and other relevant information.
-
 ## Installation
 
 1. Clone the repository
