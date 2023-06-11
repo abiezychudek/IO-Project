@@ -92,4 +92,16 @@ public class PostFactory {
         postRepository.save(p);
 
     }
+    public void addRatingToPost(Long id, double rating) {
+
+        Optional<Post> post = postRepository.findById(id);
+        Post p = post.get();
+        double newRate;
+        newRate =  (p.getAvgRating() * p.getNumOfRatings()) + rating;
+        p.setNumOfRatings(p.getNumOfRatings()+1);
+        newRate = newRate/p.getNumOfRatings();
+        p.setAvgRating(newRate);
+        postRepository.save(p);
+
+    }
 }
