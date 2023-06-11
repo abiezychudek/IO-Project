@@ -19,7 +19,7 @@ import java.util.List;
 public class Post implements CategoryInterface {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
     private String author;
@@ -29,14 +29,11 @@ public class Post implements CategoryInterface {
     private double difficulty;
     private double howManyPortions;
     private List<Categories> categories;
+    private List<String> ingredients;
+    private List<String> instructions;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinColumn(name="ingredient_id", referencedColumnName = "id", nullable = false)
-    private List<Ingredient> ingredients;
-
-    @OneToMany(cascade = {CascadeType.ALL})
-    @JoinColumn(name="step_id", referencedColumnName = "id", nullable = false)
-    private List<Step> instructions;
+    @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     private Date createdAt;
 
