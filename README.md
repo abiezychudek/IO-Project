@@ -58,6 +58,7 @@ The results of the tests will be displayed in the terminal.
 
 ## UML
 ![352860646_785059846326539_2872095672573447524_n](https://github.com/abiezychudek/IO-Project/assets/122232469/3fbae165-72e7-4d71-8709-7e287c41c1cb)
+![352860646_785059846326539_2872095672573447524_n](https://github.com/abiezychudek/IO-Project/blob/1d09d1838d4f8ed142efa6e21e6f2eef23f8a416/Use%20case.jpeg)
 
 
 
