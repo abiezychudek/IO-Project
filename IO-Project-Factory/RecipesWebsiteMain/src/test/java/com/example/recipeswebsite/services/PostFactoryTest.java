@@ -125,4 +125,28 @@ class PostFactoryTest {
         assertThat(result.get().getId()).isEqualTo(postId);
         assertThat(result.get().getTitle()).isEqualTo("Test Post");
     }
+
+
+    @Test
+    public void testAddRatingToPost() {
+        // Create a mock post with id 1, average rating 4.0 and number of ratings 2
+        Post mockPost = new Post();
+        mockPost.setId(1L);
+        mockPost.setAvgRating(4.0);
+        mockPost.setNumOfRatings(2);
+
+        // Create a mock list of accepted posts and add the mock post to it
+        List<Post> mockAcceptedPosts = new ArrayList<>();
+        mockAcceptedPosts.add(mockPost);
+
+        // Create a mock service and inject the mock list of accepted posts
+        postService.saveAccepted(mockPost);
+
+        // Call the method under test with id 1 and rating 5.0
+        postService.addRatingToPost(1L, 5.0);
+
+        // Verify that the average rating and number of ratings of the post are updated correctly
+        assertEquals(4.333333333333333, mockPost.getAvgRating(), 0.00001); // The new average rating should be (4*2 + 5) / 3
+        assertEquals(3, mockPost.getNumOfRatings()); // The new number of ratings should be 2 + 1
+    }
 }
