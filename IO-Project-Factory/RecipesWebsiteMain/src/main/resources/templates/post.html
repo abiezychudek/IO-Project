@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Blog :: post</title>
+    <title th:text="${post.title}"></title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
@@ -48,6 +48,7 @@
     </div>
 </div>
 <div>
+    <h3>Description:</h3>
     <a th:text="${post.description}"></a>
 </div>
 <hr>

@@ -40,11 +40,6 @@ public class Post implements CategoryInterface {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    /*@NotNull
-    @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
-    private Account account;*/
-
     public Post(PostData postData) {
         this.title = postData.getTitle();
         this.author = postData.getAuthor();

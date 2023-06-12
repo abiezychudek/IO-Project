@@ -25,7 +25,7 @@ public class HomeController implements CategoryInterface {
     @GetMapping("/")
     public String home(Model model){
 
-        List<Post> posts = postFactory.getAll();
+        List<Post> posts = postFactory.getAllAccepted();
         model.addAttribute("recipes", posts);
         model.addAttribute("ingr", new Search());
         return "home";

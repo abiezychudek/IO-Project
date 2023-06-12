@@ -9,17 +9,22 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostFactory {
     private final PostRepository postRepository;
 
+    private List<Post> acceptedPosts;
+
     @Autowired
     public PostFactory(PostRepository postRepository) {
         this.postRepository = postRepository;
+        acceptedPosts = new ArrayList<Post>();
     }
 
     public Post createPost(PostData postData) {
@@ -72,9 +77,34 @@ public class PostFactory {
         postRepository.saveAll(post1);
     }
 
+    public void delete(Post post){
+        postRepository.delete(post);
+    }
+
+    public List<Post> getAllAccepted() {
+        return acceptedPosts;
+    }
+
+    public Optional<Post> getByIdAccepted(Long id) {
+        return acceptedPosts.stream().filter(a -> a.getId() == id).collect(Collectors.toList()).stream().findFirst();
+    }
+
+    public Long getIndexOfPost(Post post){
+        for(Long i = 0L; i < acceptedPosts.size(); i++){
+            if(acceptedPosts.get(Math.toIntExact(i)).equals(post)){
+                return i;
+            }
+        }
+        return 0L;
+    }
+
+    public void saveAccepted(Post post){
+        acceptedPosts.add(post);
+    }
+
     public void addCommentToPost(Long id, Comment c) {
 
-        Optional<Post> post = postRepository.findById(id);
+        Optional<Post> post = getByIdAccepted(id);
         Post p = post.get();
         c.setPostId(p);
         c.setCreatedAt(new Date());
@@ -89,19 +119,20 @@ public class PostFactory {
         }
         c.setAuthor(username);
         p.getComments().add(c);
-        postRepository.save(p);
+        acceptedPosts.set(Math.toIntExact(getIndexOfPost(p)), p);
 
     }
+
     public void addRatingToPost(Long id, double rating) {
 
-        Optional<Post> post = postRepository.findById(id);
+        Optional<Post> post = getByIdAccepted(id);
         Post p = post.get();
         double newRate;
         newRate =  (p.getAvgRating() * p.getNumOfRatings()) + rating;
         p.setNumOfRatings(p.getNumOfRatings()+1);
         newRate = newRate/p.getNumOfRatings();
         p.setAvgRating(newRate);
-        postRepository.save(p);
+        acceptedPosts.set(Math.toIntExact(getIndexOfPost(p)), p);
 
     }
 }

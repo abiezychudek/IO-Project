@@ -24,7 +24,7 @@ public class ViewTemplateController implements CategoryInterface {
     @GetMapping("/viewTemplate")
     public String home(Model model){
 
-        List<Post> posts = postFactory.getAll();
+        List<Post> posts = postFactory.getAllAccepted();
         model.addAttribute("recipes", posts);
         model.addAttribute("ingr", new Search());
         return "viewTemplate";

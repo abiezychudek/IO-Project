@@ -25,7 +25,7 @@ public class RankingController {
     @GetMapping("/rank")
     public String getRanking(Model model){
 
-        List<Post> postsSorted = postFactory.getAll().stream().sorted(Comparator.comparingDouble(Post::getAvgRating).reversed()).collect(Collectors.toList());
+        List<Post> postsSorted = postFactory.getAllAccepted().stream().sorted(Comparator.comparingDouble(Post::getAvgRating).reversed()).collect(Collectors.toList());
         model.addAttribute("recipes", postsSorted);
         model.addAttribute("ingr", new Search());
         return "recipesRanking";

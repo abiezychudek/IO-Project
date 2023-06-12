@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Blog :: New Post</title>
+    <title>Create new post</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/PostStyle.css}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -72,6 +72,10 @@
         <div class="post-input">
             <label for="image">Image</label>
             <input id="image" type="text" name="image" th:field="*{imgUrl}" />
+        </div>
+        <div class="post-input">
+            <label for="description">Description</label>
+            <textarea id="description" rows="4" cols="30" placeholder="Add your description..." name="description" th:field="*{description}" />
         </div>
         <div class="submit">
             <button type="submit" class="btn btn-success">Publish Post</button>

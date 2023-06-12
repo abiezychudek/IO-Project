@@ -58,7 +58,5 @@ public class DbInit implements CommandLineRunner, CategoryInterface {
         Post post1 = postFactory.createPost(postData1);
         Post post2 = postFactory.createPost(postData2);
 
-
-        postFactory.saveAll(List.of(post1, post2));
     }
 }

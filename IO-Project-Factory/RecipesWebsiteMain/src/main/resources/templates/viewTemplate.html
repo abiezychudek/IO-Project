@@ -35,23 +35,6 @@
         </ul>
     </div>
 </div>
-
-<div th:fragment = "top-search">
-    <div class="top-search">
-        <form action="#" th:action="@{/}" method="post" th:object="${ingr}">
-            <input type="text" th:field="*{name}" placeholder="Search..." name="search">
-            <input type="submit" value="Search">
-        </form>
-        <form action="#" th:action="@{/}" method="post" th:object="${ingr}">
-            <select th:field="*{ingrdts}" id="ingrdts" multiple>
-                <option th:each="i : ${T(com.example.recipeswebsite.model.CategoryInterface.Categories).values()}" th:value="${i}" th:text="${i}"></option>
-            </select>
-            <input type="submit" value="Filter">
-        </form>
-
-    </div>
-</div>
-
 <div th:fragment = "left-search">
 
     <form action="#" th:action="@{/}" method="post" th:object="${ingr}">

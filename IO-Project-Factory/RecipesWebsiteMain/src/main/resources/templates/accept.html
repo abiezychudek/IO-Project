@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Check posts</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+  <div th:replace="@{/viewTemplate}::header"> </div>
+  <hr>
+  <div class="row">
+    <div class="right-column">
+      <div class="posts-container">
+        <h2 th:text="'Posts to check: ' + ${#lists.size(postsToAccept)}"></h2>
+        <div class="recipe-item" th:each="recipe : ${postsToAccept}">
+          <a th:href="@{'/postsToAccept/' + ${recipe.getId()}}">
+            <div class="recipe-item-footer">
+              <p th:text="${recipe.getTitle()}"></p>
+              <i th:text="${recipe.getAuthor()}"></i>
+              <form th:action="@{/admin/accept}" method="post">
+                <input type="hidden" name="id" th:value="${recipe.getId()}">
+                <button type="submit" name="action" value="accept">Accept</button>
+                <button type="submit" name="action" value="deny">Deny</button>
+              </form>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

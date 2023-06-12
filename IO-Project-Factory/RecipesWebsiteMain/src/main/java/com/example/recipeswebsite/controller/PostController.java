@@ -40,7 +40,7 @@ public class PostController {
         Post post = postFactory.createPost(postData);
         postFactory.save(post);
         if (post.getId() != null) {
-            return "redirect:/posts/" + post.getId();
+            return "redirect:/";
         } else {
             return "post_new";
         }
@@ -58,7 +58,35 @@ public class PostController {
             model.addAttribute("comment", new Comment());
             return "post";
         } else {
-            return "home";
+            optionalPost = postFactory.getByIdAccepted(id);
+            if (optionalPost.isPresent()) {
+                Post post = optionalPost.get();
+                model.addAttribute("post", post);
+                model.addAttribute("comment", new Comment());
+                return "post";
+            } else {
+                return "home";
+            }
+        }
+    }
+
+    @GetMapping("/postsToAccept/{id}")
+    public String getPostToAccept(@PathVariable Long id, Model model) {
+        // find post by id
+        Optional<Post> optionalPost = postFactory.getById(id);
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            model.addAttribute("post", post);
+            return "postToAccept";
+        } else {
+            optionalPost = postFactory.getByIdAccepted(id);
+            if (optionalPost.isPresent()) {
+                Post post = optionalPost.get();
+                model.addAttribute("post", post);
+                return "postToAccept";
+            } else {
+                return "home";
+            }
         }
     }
 
@@ -75,7 +103,7 @@ public class PostController {
      @PostMapping("/posts/rating/{id}")
     public String addRating(@PathVariable Long id, @RequestParam double rating, Model model) {
 
-        postFactory.addRatingToPost(id, rating);
+        postFactory.addRatingToPost(id, rating); //add method in postFactory
 
         return "redirect:/posts/" + id;
 

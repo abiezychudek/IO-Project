@@ -27,8 +27,7 @@ public class SearchController {
     @PostMapping("/")
     public String search(@ModelAttribute("ingr") Search searchedIngredients, Model model){
 
-        //List<Post> postsFiltered = posts.stream().filter(p -> p.getIngredients().contains(ingr.ingrdts)).collect(Collectors.toList());
-        List<Post> posts = postFactory.getAll();
+        List<Post> posts = postFactory.getAllAccepted();
         Collections.reverse(posts);
         List<Post> postsOutput = new ArrayList<Post>();
 

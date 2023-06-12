@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <title>Blog :: post</title>
-    <link th:href="@{/css/PostStyle.css}" rel="stylesheet" type="text/css"/>
+    <title th:text="${post.title}"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
+<div class="container">
+<div th:replace="@{/viewTemplate}::header"> </div>
 <div class="recipe-post">
     <div class="recipe-header">
         <h2 class="title" th:text="${post.title}"></h2>
@@ -46,10 +48,20 @@
     </div>
 </div>
 <div>
+    <h3>Description:</h3>
     <a th:text="${post.description}"></a>
 </div>
 <hr>
 <ul sec:authorize="isAuthenticated()">
+    <div class="add-rating">
+        <form th:object="${post}" th:action="@{/posts/rating/__${post.id}__}" method="POST">
+            
+            <label for="rating">Rate recipe:</label>
+            <input type="number" name="rating" id="rating" min="0" max="5" step="0.5" required>
+            
+            <button type="submit">Submit</button>
+          </form>
+    </div>
 <div class="add-comment">
     <form th:object="${post}" th:action="@{/posts/__${post.id}__}" method="post">
         <div th:object="${comment}">
@@ -64,6 +76,7 @@
         <span th:text="'Created: ' + ${#dates.format(comment.createdAt, 'dd-MMM-yyyy')} + ' by ' + ${comment.author}"></span>
         <p th:text="${comment.getContent()}"></p>
     </div>
+</div>
 </div>
 </body>
 

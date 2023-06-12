@@ -174,3 +174,6 @@ hr{
     margin-bottom: 15px;
 }
 
+.post-input textarea{
+    display: block;
+}
