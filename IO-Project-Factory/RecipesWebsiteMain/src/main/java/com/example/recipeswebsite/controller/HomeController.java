@@ -29,8 +29,5 @@ public class HomeController implements CategoryInterface {
         model.addAttribute("recipes", posts);
         model.addAttribute("ingr", new Search());
         return "home";
-
     }
-
-
 }

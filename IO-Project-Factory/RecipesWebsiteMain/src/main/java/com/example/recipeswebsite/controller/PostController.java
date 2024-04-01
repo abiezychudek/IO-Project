@@ -20,6 +20,7 @@ import java.util.Optional;
 public class PostController {
 
     private final PostFactory postFactory;
+    private String postData;
 
     @Autowired
     public PostController(PostFactory postFactory) {
@@ -28,7 +29,7 @@ public class PostController {
 
     @GetMapping("/createPost")
     public String showCreateForm(Model model) {
-        model.addAttribute("postData", new PostData());
+        model.addAttribute(postData, new PostData());
         return "post_new";
     }
 
@@ -44,13 +45,11 @@ public class PostController {
         } else {
             return "post_new";
         }
-
     }
 
 
     @GetMapping("/posts/{id}")
     public String getPost(@PathVariable Long id, Model model) {
-        // find post by id
         Optional<Post> optionalPost = postFactory.getById(id);
         if (optionalPost.isPresent()) {
             Post post = optionalPost.get();
@@ -72,7 +71,6 @@ public class PostController {
 
     @GetMapping("/postsToAccept/{id}")
     public String getPostToAccept(@PathVariable Long id, Model model) {
-        // find post by id
         Optional<Post> optionalPost = postFactory.getById(id);
         if (optionalPost.isPresent()) {
             Post post = optionalPost.get();
@@ -90,79 +88,17 @@ public class PostController {
         }
     }
 
-    //to change
     @PostMapping("/posts/{id}")
     public String addComment(@PathVariable Long id, @ModelAttribute("comment") Comment comment, Model model) {
-
         postFactory.addCommentToPost(id, comment);
-
         return "redirect:/posts/" + id;
-
     }
     
      @PostMapping("/posts/rating/{id}")
     public String addRating(@PathVariable Long id, @RequestParam double rating, Model model) {
-
-        postFactory.addRatingToPost(id, rating); //add method in postFactory
-
+        postFactory.addRatingToPost(id, rating);
         return "redirect:/posts/" + id;
 
     }
-
-    /*
-    @GetMapping("/posts/{id}/edit")
-    //@PreAuthorize("isAuthenticated()")
-    public String getPostForEdit(@PathVariable Long id, Model model) {
-
-        // find post by id
-        Optional<Post> optionalPost = postService.getById(id);
-        // if post exist put it in model
-        if (optionalPost.isPresent()) {
-            Post post = optionalPost.get();
-            model.addAttribute("post", post);
-            return "post_edit";
-        } else {
-            return "404";
-        }
-    }
-
-    @GetMapping("/posts/{id}/delete")
-    //@PreAuthorize("isAuthenticated()")
-    public String deletePost(@PathVariable Long id) {
-
-        // find post by id
-        Optional<Post> optionalPost = postService.getById(id);
-        if (optionalPost.isPresent()) {
-            Post post = optionalPost.get();
-
-            postService.delete(post);
-            return "redirect:/";
-        } else {
-            return "404";
-        }
-    }
-
-    @PostMapping("/posts/{id}")
-    //@PreAuthorize("isAuthenticated()")
-    public String updatePost(@PathVariable Long id, Post post) {
-
-        Optional<Post> optionalPost = postService.getById(id);
-        if (optionalPost.isPresent()) {
-            Post existingPost = optionalPost.get();
-
-            existingPost.setTitle(post.getTitle());
-            existingPost.setPreparationTime(post.getPreparationTime());
-            existingPost.setDifficultyLevel(post.getDifficultyLevel());
-            existingPost.setPortionsSize(post.getPortionsSize());
-            existingPost.setAverageRating(post.getAverageRating());
-            existingPost.setIngredients((post.getIngredients()));
-            existingPost.setSteps((post.getSteps()));
-
-            postService.save(existingPost);
-        }
-
-        return "redirect:/posts/" + post.getId();
-    }*/
-
 }
 
